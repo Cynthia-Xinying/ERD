@@ -1,0 +1,57 @@
+erdiagram UniversityModel
+notation=crowsfoot
+
+entity Student {
+    student_id: INTEGER key
+    name: VARCHAR(100)
+    email: VARCHAR(100)
+    major: VARCHAR(50)
+    year: INTEGER
+}
+
+entity Course {
+    course_id: VARCHAR(10) key
+    title: VARCHAR(200)
+    credits: INTEGER
+    department_id: VARCHAR(10)
+    instructor_id: INTEGER
+}
+
+entity Instructor {
+    instructor_id: INTEGER key
+    name: VARCHAR(100)
+    email: VARCHAR(100)
+    department_id: VARCHAR(10)
+}
+
+entity Department {
+    department_id: VARCHAR(10) key
+    name: VARCHAR(100)
+    location: VARCHAR(100)
+}
+
+entity Enrollment {
+    enrollment_id: INTEGER key
+    student_id: INTEGER
+    course_id: VARCHAR(10)
+    grade: VARCHAR(2)
+        semester: VARCHAR(20)
+}
+
+relationship StudentEnrollment {
+    Student[1 | "student"] -> Enrollment[0..N | "enrollment"]
+}
+
+
+
+relationship CourseInstructor {
+    Course[0..N | "course"] -> Instructor[1 | "instructor"]
+}
+
+relationship CourseDepartment {
+    Course[0..N | "course"] -> Department[1 | "department"]
+}
+
+relationship InstructorDepartment {
+    Instructor[0..N | "instructor"] -> Department[1 | "department"]
+}
